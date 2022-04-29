@@ -1,4 +1,5 @@
 import random
+import collections
 
 Doves = []
 Hawks = []
@@ -47,24 +48,24 @@ class Agent:
         if(self.strategy == "Hawk"):
             self.add_agent(self, "Hawk")
 
-    def compete_with_agent(self, agent2):
-        """
-        Logic for survival, death and reproduction of agents when competing for food.
-        """
-        if(self.strategy == "Dove"):
-            if(agent2.strategy == "Dove"):
-                self.survive()
-                agent2.survive()
-            if(agent2.strategy == "Hawk"):
-                self.die()
-                agent2.survive_and_reproduce()
-        if(self.strategy == "Hawk"):
-            if(agent2.strategy == "Dove"):
-                self.survive_and_reproduce()
-                agent2.die()
-            if(agent2.strategy == "Hawk"):
-                self.die()
-                agent2.die()
+    # def compete_with_agent(self, agent2):
+    #     """
+    #     Logic for survival, death and reproduction of agents when competing for food.
+    #     """
+    #     if(self.strategy == "Dove"):
+    #         if(agent2.strategy == "Dove"):
+    #             self.survive()
+    #             agent2.survive()
+    #         if(agent2.strategy == "Hawk"):
+    #             self.die()
+    #             agent2.survive_and_reproduce()
+    #     if(self.strategy == "Hawk"):
+    #         if(agent2.strategy == "Dove"):
+    #             self.survive_and_reproduce()
+    #             agent2.die()
+    #         if(agent2.strategy == "Hawk"):
+    #             self.die()
+    #             agent2.die()
 
 
 class FoodMap:
@@ -79,7 +80,7 @@ class FoodMap:
         for i in range(0, self.number_of_locations):
             self.food_map[i] = 2
         for i in range(0, self.number_of_locations):
-            self.number_of_agents_at_location[i] = 0
+            del self.agents_at_location[i][:]
 
     def remove_food(self, loc, quantity=1):
         self.food_map[loc] -= quantity
@@ -113,7 +114,26 @@ class Simulation:
                 if len(my_food_map.agents_at_location[rand_loc]) < 2:
                     my_food_map.agents_at_location[rand_loc].append(hawk)
                     break
+                
+
+    def compete_at_location(self, loc):
+        if(collections.Counter(self.my_food_map.agents_at_location[loc])==collections.Counter(["Dove", "Dove"])):
+            pass
+        elif(collections.Counter(self.my_food_map.agents_at_location[loc])==collections.Counter(["Hawk", "Hawk"])):
+            del self.my_food_map.agents_at_location[loc][:]
+            del Hawks[-2:]
+        elif(collections.Counter(self.my_food_map.agents_at_location[loc])==collections.Counter(["Dove", "Hawk"])):
+            del Doves[-1:]
+            if self.my_food_map.agents_at_location[loc][0].strategy == "Dove":
+                del self.my_food_map.agents_at_location[loc][0]
+            else:
+                del self.my_food_map.agents_at_location[loc][1]
+        else:
+            pass
             
+    def compete_at_all_locations(self):
+        for i in range(0, self.my_food_map.number_of_locations):
+            self.compete_at_location(self, i)
 
         
             
@@ -121,4 +141,11 @@ class Simulation:
     def prepare_for_simulation(self):
         self.my_food_map.reset()
 
-    def simulate_generation(self):
+    def simulate_generation(self, my_food_map: FoodMap):
+        self.assign_location_to_agents(self, my_food_map = self.my_food_map)
+        self.compete_at_all_locations(self)
+        self.my_food_map.reset()
+        
+    def main_simulation(self, n):
+        for _ in range(0, n):
+            
