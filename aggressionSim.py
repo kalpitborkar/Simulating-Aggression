@@ -1,72 +1,63 @@
-from pkg_resources import safe_version
-import random
+Doves = []
+Hawks = []
 
 class Agent:
-    food = 0
-    strategy = None
-    location = None
-
-    def __init__(self, strategy):
-        self.strategy = strategy
-
-    def updateFood(self, food):
-        self.food = food
-
-
-class FoodMap:
-    foodQuantity = 100
-    foodMap = []
-
-    def __init__(self):
-        for i in range(self.foodQuantity):
-            self.foodMap.append(2)
-
-    def removeFoodFromMap(self, location):  # if food is eaten, make it zero
-        self.foodMap[location] = 0
-
-    def resetFoodMap(self):
-        for i in range(self.foodQuantity):
-            self.foodMap[i] = 2
-
-
-class Simulation:
-
-    numberOfGenstoSimulate = 100
+    """
+    Agents are of two types : Doves and Hawks
+    They compete for food and survival in this simulation
+    """
     
-    # lists contaning the two different types of agents - "doves" and "hawks"
-    agentType1 = [] #doves
-    agentType2 = [] #hawks
     
-    #initialize foodMap
-    myFoodMap = FoodMap()
-    
-    def initializeAgents(agentType1, agentType2, initialNumberOfType1Agents, initialNumberOfType2Agents):
+    def __init__(self, strat = None, loc = None):
         """
-        Creates agent objects and initializes the lists agentType1 and agentType2
+        Initialization of agent.
         """
-        for i in range(initialNumberOfType1Agents):
-            agentType1.append(Agent("Dove"))
-        for i in range(initialNumberOfType2Agents):
-            agentType2.append(Agent("Hawk"))
+        self.strategy = strat
+        self.location = loc
         
-    def setAgentLocations(agentType1, agentType2, myFoodMap):
-        """
-        Locates agents to food on the map - maximum two agents at a certain location
-        """
+    def survive(self):
+        pass
+    
+    def die(self):
+        if(self.strategy == "Dove"):
+            Doves.pop()
+        if(self.strategy == "Hawk"):
+            Hawks.pop()
+            
+    def add_agent(self, strat):
+        new_agent = Agent(self, strat)
+        if(self.strategy == "Dove"):
+            Doves.append(new_agent)
+        if(self.strategy == "Hawk"):
+            Hawks.append(new_agent)
+    
+    def survive_and_reproduce(self):
+        if(self.strategy == "Dove"):
+            self.add_agent(self, "Dove")
+        if(self.strategy == "Hawk"):
+            self.add_agent(self, "Hawk")
             
         
-        
-    def competeAgents(agentType1, agentType2, location):
+    def compete_with_agent(self, agent2):
         """
-        Agents compete for food - survive, die or reproduce depending on the conditions - update lists agentType1 and agentType2
+        Logic for survival, death and reproduction of agents when competing for food.
         """
-        
+        if(self.strategy == "Dove"):
+            if(agent2.strategy == "Dove"):
+                self.survive()
+                agent2.survive()
+            if(agent2.strategy == "Hawk"):
+                self.die()
+                agent2.survive_and_reproduce()
+        if(self.strategy == "Hawk"):
+            if(agent2.strategy == "Dove"):
+                self.survive_and_reproduce()
+                agent2.die()
+            if(agent2.strategy == "Hawk"):
+                self.die()
+                agent2.die()
+                
     
-    
-    for currGen in range(numberOfGenstoSimulate):
-        #todo
-        
-
-        
-        
+                
+            
         
