@@ -15,8 +15,8 @@ The `Simulation` includes two strategies:
   - `Hawk` strategy - Aggressive
 
 
-- `Dove` shares the food if against a dove.
-- `Hawk` steals both pieces of food if against a dove.
+- `Dove` shares the food if against a `Dove`.
+- `Hawk` steals both pieces of food if against a `Dove`.
 - No agent gets any food if both the agents are `Hawks`
 
 ## Simulation Rules
