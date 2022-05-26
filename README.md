@@ -11,7 +11,7 @@ Iterate over X number of generations:
 
 ## Agent rules
 The `Simulation` includes two strategies:
-  - `Dov`e strategy - Passive
+  - `Dove` strategy - Passive
   - `Hawk` strategy - Aggressive
 
 ### Doves and Hawks
