@@ -14,10 +14,10 @@ The `Simulation` includes two strategies:
   - `Dove` strategy - Passive
   - `Hawk` strategy - Aggressive
 
-### Doves and Hawks
-`Dove` shares the food if against a dove.
-`Hawk` steals both pieces of food if against a dove.
-No agent gets any food if both the agents are `Hawks`
+
+- `Dove` shares the food if against a dove.
+- `Hawk` steals both pieces of food if against a dove.
+- No agent gets any food if both the agents are `Hawks`
 
 ## Simulation Rules
 In each iteration of `Simulation`:
@@ -25,3 +25,6 @@ In each iteration of `Simulation`:
   - Consumption of a single piece of `food` leads to surival of the agent.
   - Consumption of a two pieces of `food` leads to reproduction of the agent.
   - No consumption of `food` leads to the death of the agent.
+
+## References
+This simulation is based on [Simulating the Evolution of Aggression](https://www.youtube.com/watch?v=YNMkADpvO4w&ab_channel=Primer) by [Primer](https://www.youtube.com/channel/UCKzJFdi57J53Vr_BkTfN3uQ)
