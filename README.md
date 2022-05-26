@@ -10,7 +10,7 @@ Iterate over X number of generations:
   - The agent survives, dies or reproduces depending on the food quantity consumed in each interation.
 
 ## Agent rules
-The simulation includes two strategies:
+The `Simulation` includes two strategies:
   - `Dov`e strategy - Passive
   - `Hawk` strategy - Aggressive
 
@@ -20,7 +20,7 @@ The simulation includes two strategies:
 No agent gets any food if both the agents are `Hawks`
 
 ## Simulation Rules
-In each iteration of the simulation:
+In each iteration of `Simulation`:
   - Each location has two pieces of `food`.
   - Consumption of a single piece of `food` leads to surival of the agent.
   - Consumption of a two pieces of `food` leads to reproduction of the agent.
